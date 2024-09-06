@@ -1,4 +1,4 @@
-package com.example.healthyfitness.ui.theme
+package com.example.healthyfitness.presentation.theme
 
 import androidx.compose.ui.graphics.Color
 
