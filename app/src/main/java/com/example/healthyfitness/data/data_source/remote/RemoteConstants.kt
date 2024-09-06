@@ -1,6 +1,6 @@
 package com.example.healthyfitness.data.data_source.remote
 
-class Constants {
+class RemoteConstants {
     companion object {
         const val BASE_URL = ""
 
