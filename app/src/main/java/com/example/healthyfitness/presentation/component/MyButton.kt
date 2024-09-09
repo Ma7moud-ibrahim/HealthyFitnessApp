@@ -90,7 +90,7 @@ private fun MyButtonPreview() {
             icon = R.drawable.ic_export,
             shape = MaterialTheme.shapes.medium,
             buttonEnable = true,
-            textStyle = MaterialTheme.typography.titleLarge
+            textStyle = MaterialTheme.typography.bodyLarge
         )
     }
 }
