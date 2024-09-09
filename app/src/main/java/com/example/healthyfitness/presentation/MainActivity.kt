@@ -15,6 +15,10 @@ import com.example.healthyfitness.R
 import com.example.healthyfitness.presentation.common_components.shimmer.CustomButton
 import com.example.healthyfitness.presentation.common_components.shimmer.CustomInput
 import com.example.healthyfitness.presentation.common_components.shimmer.Icon
+import com.example.healthyfitness.presentation.screens.home_page1_screen.HomePage1Screen
+import com.example.healthyfitness.presentation.screens.home_page1_screen.components.ActivityItem
+import com.example.healthyfitness.presentation.screens.home_page1_screen.model.ActivityType
+import com.example.healthyfitness.presentation.screens.home_page1_screen.model.FitnessActivity
 import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,13 +29,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HealthyFitnessTheme(dynamicColor = false) {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-//                    AppNavHost()
-                }
+//                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+//                    Greeting(
+//                        name = "Android",
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
+////                    AppNavHost()
+//                }
 
             }
         }
