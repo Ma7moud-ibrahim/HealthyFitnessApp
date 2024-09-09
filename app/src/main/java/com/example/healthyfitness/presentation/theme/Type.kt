@@ -11,20 +11,22 @@ import com.example.healthyfitness.R
 val arvoFontFamily = FontFamily(
     Font(R.font.arvo_bold, FontWeight.Bold),
     Font(R.font.arvo_regular, FontWeight.Normal),
-  )
-val robotoFontFamily = FontFamily(
-    Font(R.font.roboto_bold, FontWeight.Bold,) ,
-    Font(R.font.roboto_medium, FontWeight.Medium,) ,
-    Font(R.font.roboto_regular, FontWeight.Normal,),
-    Font(R.font.roboto_light, FontWeight.Light,),
 )
+val robotoFontFamily = FontFamily(
+    Font(R.font.roboto_bold, FontWeight.Bold),
+    Font(R.font.roboto_medium, FontWeight.Medium),
+    Font(R.font.roboto_regular, FontWeight.Normal),
+    Font(R.font.roboto_light, FontWeight.Light),
+)
+
 // Set of Material typography styles to start with
 val Typography = Typography(
     headlineMedium = TextStyle(
         fontFamily = arvoFontFamily,
         fontWeight = FontWeight.Bold,
         fontSize = 42.sp,
-        lineHeight = 40.sp,),
+        lineHeight = 40.sp,
+    ),
 
     labelLarge = TextStyle(
         fontFamily = arvoFontFamily,
@@ -39,7 +41,8 @@ val Typography = Typography(
         fontSize = 25.sp,
         lineHeight = 20.sp,
         letterSpacing = 0.1.sp
-    ),titleSmall = TextStyle(
+    ),
+    titleSmall = TextStyle(
         fontFamily = robotoFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 20.sp,
@@ -60,14 +63,20 @@ val Typography = Typography(
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
-    bodySmall =
-    TextStyle(
+    bodySmall = TextStyle(
         fontFamily = robotoFontFamily,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
     ),
+    labelSmall = TextStyle(
+        fontFamily = robotoFontFamily,
+        fontWeight = FontWeight.Light,
+        fontSize = 12.sp,
+        lineHeight = 16.sp,
+        letterSpacing = 0.5.sp
+    )
 
     /* Other default text styles to override
     titleLarge = TextStyle(
