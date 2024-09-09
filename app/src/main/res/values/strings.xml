@@ -4,4 +4,6 @@
     <string name="fitness_activity_cycling">Cycling</string>
     <string name="fitness_activity_swimming">Swimming</string>
     <string name="fitness_activity_workout">Workout</string>
+    <string name="navigate_back">back navigation</string>
+    <string name="user_image">User Image</string>
 </resources>
