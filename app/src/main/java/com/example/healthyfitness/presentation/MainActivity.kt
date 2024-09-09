@@ -11,6 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.healthyfitness.R
+import com.example.healthyfitness.presentation.common_components.shimmer.CustomButton
+import com.example.healthyfitness.presentation.common_components.shimmer.CustomInput
+import com.example.healthyfitness.presentation.common_components.shimmer.Icon
 import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -20,7 +24,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            HealthyFitnessTheme {
+            HealthyFitnessTheme(dynamicColor = false) {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
                         name = "Android",
@@ -36,10 +40,13 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
+/*
+    CustomButton(buttonText = "Sign Up", icon = { Icon("Sign Up") }, width = 300.0) {
+
+    }
+*/
+    CustomInput("Enter your name", R.drawable.ic_lock_icon)
+
 }
 
 @Preview(showBackground = true)
