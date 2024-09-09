@@ -59,6 +59,8 @@ dependencies {
     implementation(libs.retrofit2.kotlinx.serialization.converter)
     implementation(libs.okhttp)
     implementation(libs.androidx.room.runtime)
+    //LocalDateTime
+    implementation(libs.threetenabp)
     annotationProcessor(libs.androidx.room.compiler)
     //noinspection KaptUsageInsteadOfKsp
     kapt(libs.androidx.room.compiler)
