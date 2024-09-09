@@ -9,8 +9,7 @@ import kotlinx.coroutines.flow.asStateFlow
 
 class HomePage1ViewModel : ViewModel() {
 
-//    private val _selectedDate = MutableStateFlow(LocalDate.now())
-//    val selectedDate: StateFlow<LocalDate> = _selectedDate.asStateFlow()
+//Date
 
     private val _activities = MutableStateFlow(
         listOf(
@@ -22,8 +21,6 @@ class HomePage1ViewModel : ViewModel() {
     )
     val activities: StateFlow<List<FitnessActivity>> = _activities.asStateFlow()
 
-//    fun updateSelectedDate(date: LocalDate) {
-//        _selectedDate.value = date
-//    }
+//    fun updateSelectedDate(date: LocalDate)
 
 }
