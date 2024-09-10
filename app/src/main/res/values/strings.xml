@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Healthy Fitness</string>
+    <string name="fitness_activity_walking">Walking</string>
+    <string name="fitness_activity_cycling">Cycling</string>
+    <string name="fitness_activity_swimming">Swimming</string>
+    <string name="fitness_activity_workout">Workout</string>
+    <string name="navigate_back">back navigation</string>
+    <string name="user_image">User Image</string>
+    <string name="dumbell_rows">Dumbell Rows</string>
+    <string name="popular_exercises">Popular Exercises</string>
+    <string name="button_view_all">View All</string>
+    <string name="bench_press">Bench Press</string>">
+    <string name="bench_press_count">10 Bench Press Workout Videos For You</string>
+    <string name="play_button_description">Play Button</string>
+    <string name="entry_level_button">Entry Level</string>">
 </resources>
