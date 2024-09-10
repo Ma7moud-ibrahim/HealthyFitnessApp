@@ -1,4 +1,4 @@
-package com.example.healthyfitness.presentation.screens.food_monitor_screen.components
+package com.example.healthyfitness.presentation.screens.meals_monitor_screen.components
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState

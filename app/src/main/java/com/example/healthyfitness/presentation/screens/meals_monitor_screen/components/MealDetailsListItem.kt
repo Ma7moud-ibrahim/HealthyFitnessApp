@@ -1,4 +1,4 @@
-package com.example.healthyfitness.presentation.screens.food_monitor_screen.components
+package com.example.healthyfitness.presentation.screens.meals_monitor_screen.components
 
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.background
@@ -26,15 +26,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.healthyfitness.R
-import com.example.healthyfitness.presentation.screens.food_monitor_screen.fakeMealDetails
-import com.example.healthyfitness.presentation.screens.food_monitor_screen.model.MealDetailsUiModel
+import com.example.healthyfitness.presentation.screens.meals_monitor_screen.model.MealDetailsUiModel
+import com.example.healthyfitness.presentation.screens.meals_monitor_screen.preview_data.fakeMealDetails
 import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 import com.example.healthyfitness.presentation.theme.arvoFontFamily
 
 @Composable
 fun MealDetailsItem(
     meal: MealDetailsUiModel,
-    onClick: () -> Unit,
+    onExpandClicked: () -> Unit,
+    onRecipeClicked: () -> Unit,
     modifier: Modifier = Modifier,
     isExpanded: Boolean = false,
     background: Color = MaterialTheme.colorScheme.secondary,
@@ -57,16 +58,18 @@ fun MealDetailsItem(
         modifier = modifier
             .clip(shape = shape)
             .background(color = background)
-            .clickable(onClick = onClick)
             .padding(16.dp)
     ) {
         Row(
             modifier = Modifier
+                .clickable(onClick = onExpandClicked)
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Row(verticalAlignment = Alignment.CenterVertically) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(
                     text = meal.mealName.replaceFirstChar {
                         if (it.isLowerCase()) it.titlecase() else it.toString()
@@ -105,9 +108,11 @@ fun MealDetailsItem(
             )
         }
         if (isExpanded) {
-            meal.dishes.forEach {
-                DishDetailsItem(modifier = Modifier.padding(top = 16.dp), dish = it)
-            }
+            RecipeDetailsItem(
+                modifier = Modifier.padding(top = 16.dp),
+                onClick = onRecipeClicked,
+                recipe = meal.recipe
+            )
         }
     }
 }
@@ -123,8 +128,9 @@ private fun MealDetailsPreview() {
         ) {
             MealDetailsItem(
                 meal = fakeMealDetails,
-                onClick = {},
-                isExpanded = false,
+                onExpandClicked = {},
+                onRecipeClicked = {},
+                isExpanded = true,
                 modifier = Modifier
                     .fillMaxWidth(.95f)
                     .padding(vertical = 16.dp)

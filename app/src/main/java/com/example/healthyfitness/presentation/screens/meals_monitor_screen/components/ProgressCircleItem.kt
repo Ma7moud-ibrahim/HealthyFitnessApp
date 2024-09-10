@@ -1,4 +1,4 @@
-package com.example.healthyfitness.presentation.screens.food_monitor_screen.components
+package com.example.healthyfitness.presentation.screens.meals_monitor_screen.components
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Canvas

@@ -1,4 +1,4 @@
-package com.example.healthyfitness.presentation.screens.food_monitor_screen
+package com.example.healthyfitness.presentation.screens.meals_monitor_screen
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -20,14 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.healthyfitness.presentation.screens.food_monitor_screen.components.CaloriesProgressIndicator
-import com.example.healthyfitness.presentation.screens.food_monitor_screen.components.MealDetailsItem
-import com.example.healthyfitness.presentation.screens.food_monitor_screen.model.MealDetailsUiModel
+import com.example.healthyfitness.presentation.screens.meals_monitor_screen.components.CaloriesProgressIndicator
+import com.example.healthyfitness.presentation.screens.meals_monitor_screen.components.MealDetailsItem
+import com.example.healthyfitness.presentation.screens.meals_monitor_screen.model.MealDetailsUiModel
+import com.example.healthyfitness.presentation.screens.meals_monitor_screen.preview_data.fakeMealDetails
 import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 
 @Composable
 fun FoodMonitorScreen(
     meal: List<MealDetailsUiModel>,
+    onRecipeClicked: () -> Unit,
     modifier: Modifier = Modifier,
     background: Color = MaterialTheme.colorScheme.background
 ) {
@@ -71,9 +73,10 @@ fun FoodMonitorScreen(
                 MealDetailsItem(
                     meal = meal,
                     isExpanded = expandedMealIndex == index,
-                    onClick = {
+                    onExpandClicked = {
                         expandedMealIndex = if (expandedMealIndex == index) null else index
-                    }
+                    },
+                    onRecipeClicked = onRecipeClicked
                 )
             }
         }
@@ -91,6 +94,7 @@ private fun FoodMonitorScreenPreview() {
                 fakeMealDetails.copy(mealName = "Lunch", totalCalories = 338f),
                 fakeMealDetails.copy(mealName = "Dinner", totalCalories = 200f)
             ),
+            onRecipeClicked = {},
             modifier = Modifier.padding(bottom = 36.dp)
         )
     }
