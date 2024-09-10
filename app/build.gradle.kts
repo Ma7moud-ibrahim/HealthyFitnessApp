@@ -81,7 +81,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.hilt.android.testing)
     kaptAndroidTest(libs.hilt.android.compiler)
-    kaptTest(libs.dagger.hilt.compiler)
+    kaptTest(libs.hilt.compiler)
     testImplementation(libs.hilt.android.testing)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -89,6 +89,11 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    //coil
+    implementation(libs.coil.compose)
+    //jsoup
+    implementation(libs.jsoup)
 }
 kapt {
     correctErrorTypes = true
