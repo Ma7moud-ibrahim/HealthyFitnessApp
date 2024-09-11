@@ -94,6 +94,10 @@ dependencies {
     implementation(libs.coil.compose)
     //jsoup
     implementation(libs.jsoup)
+    //retrofit gson
+    implementation(libs.converter.gson)
+    //hilt navigation
+    implementation(libs.hilt.navigation.compose)
 }
 kapt {
     correctErrorTypes = true
