@@ -5,5 +5,5 @@ data class IngredientUiModel(
     val amount: String,
     val unit: String,
     val image: String,
-    val imageUrl: String = "https://img.spoonacular.com/ingredients_100x100/$image"
+    val imageUrl: String = "https://img.spoonacular.com/ingredients_500x500/$image"
 )

@@ -29,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
-import com.example.healthyfitness.R
 import com.example.healthyfitness.presentation.screens.meals_monitor_screen.model.RecipeBriefDetailsUiModel
 import com.example.healthyfitness.presentation.screens.meals_monitor_screen.preview_data.fakeMealDetails
 import com.example.healthyfitness.presentation.screens.utils.ALPHA
@@ -64,10 +63,6 @@ fun RecipeDetailsItem(
                 painter = rememberAsyncImagePainter(
                     ImageRequest.Builder(LocalContext.current)
                         .data(data = recipe.imageUrl)
-                        .apply(block = fun ImageRequest.Builder.() {
-                            crossfade(1000)
-                            placeholder(R.drawable.notifications_man)
-                        })
                         .build()
                 ),
                 contentDescription = "Dish Image",

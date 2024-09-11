@@ -2,7 +2,6 @@ package com.example.healthyfitness.presentation.screens.recipe_details_screen.pr
 
 import com.example.healthyfitness.presentation.screens.recipe_details_screen.model.IngredientUiModel
 import com.example.healthyfitness.presentation.screens.recipe_details_screen.model.RecipeDetailsUiModel
-import org.jsoup.Jsoup
 
 
 val fakeIngredients = listOf(
@@ -62,21 +61,6 @@ val fakeIngredients = listOf(
 val fakeRecipeDetails = RecipeDetailsUiModel(
     name = "Meatless Eggs Benedict",
     imageUrl = "https://img.spoonacular.com/recipes/646982-556x370.jpg",
-    description = Jsoup.parse(
-        "If you want to add more <b>lacto ovo vegetarian</b> recipes to your repertoire," +
-                " Meatless Eggs Benedict might be a recipe you should try." +
-                " This recipe serves 2 and costs \$1.74 per serving." +
-                " One serving contains <b>605 calories</b>, <b>21g of protein</b>, and <b>45g of fat</b>." +
-                " It is brought to you by Foodista." +
-                " 2 people were glad they tried this recipe." +
-                " Head to the store and pick up ground pepper, muffins, cream, and a few other things to make it today." +
-                " From preparation to the plate, this recipe takes around <b>25 minutes</b>." +
-                " It works well as a breakfast. Overall, this recipe earns a <b>solid spoonacular score of 43%</b>." +
-                " Users who liked this recipe also liked" +
-                " <a href=\\\"https://spoonacular.com/recipes/eggs-benedict-deviled-eggs-741308\\\">Eggs Benedict Deviled Eggs</a>," +
-                " <a href=\\\"https://spoonacular.com/recipes/meatless-hash-and-eggs-78414\\\">Meatless Hash and Eggs</a>," +
-                " and <a href=\\\"https://spoonacular.com/recipes/eggs-benedict-310151\\\">Eggs Benedict</a>."
-    ).text(),
     ingredients = fakeIngredients,
     nutrition = mapOf(
         "KCal" to "605",

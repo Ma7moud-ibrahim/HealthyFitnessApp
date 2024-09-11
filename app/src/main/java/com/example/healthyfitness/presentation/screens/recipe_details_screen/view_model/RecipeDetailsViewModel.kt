@@ -17,7 +17,16 @@ class RecipeDetailsViewModel @Inject constructor(
     private val generatedMealRepository: GeneratedMealRepository
 ) : ViewModel() {
 
-    lateinit var _recipe: MutableStateFlow<RecipeDetailsUiModel>
+    private val _recipe: MutableStateFlow<RecipeDetailsUiModel> =
+        MutableStateFlow(
+            RecipeDetailsUiModel(
+                imageUrl = "",
+                name = "",
+                ingredients = listOf(),
+                nutrition = mapOf(),
+                instructions = listOf()
+            )
+        )
     val recipe = _recipe.asStateFlow()
 
     fun getRecipeDetails(id: Int) {

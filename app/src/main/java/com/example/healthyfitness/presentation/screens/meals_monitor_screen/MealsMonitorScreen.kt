@@ -29,7 +29,7 @@ import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 
 @Composable
 fun MealsMonitorScreen(
-    onRecipeClicked: () -> Unit,
+    onRecipeClicked: (Int) -> Unit,
     modifier: Modifier = Modifier,
     background: Color = MaterialTheme.colorScheme.background
 ) {
@@ -78,7 +78,7 @@ fun MealsMonitorScreen(
                     onExpandClicked = {
                         expandedMealIndex = if (expandedMealIndex == index) null else index
                     },
-                    onRecipeClicked = onRecipeClicked
+                    onRecipeClicked = { onRecipeClicked(meal.id) }
                 )
             }
         }
