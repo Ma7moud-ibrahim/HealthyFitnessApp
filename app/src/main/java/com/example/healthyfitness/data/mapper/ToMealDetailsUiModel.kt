@@ -4,7 +4,7 @@ import com.example.healthyfitness.data.data_source.remote.retrofit.model.meal.Ge
 import com.example.healthyfitness.presentation.screens.meals_monitor_screen.model.MealDetailsUiModel
 import com.example.healthyfitness.presentation.screens.meals_monitor_screen.model.RecipeBriefDetailsUiModel
 
-fun GeneratedMealPlanDataModel.toMealDetailsUiModelList(): List<MealDetailsUiModel> {
+fun GeneratedMealPlanDataModel.toMealDetailsUiModelList(eachMealCalories: List<Float>): List<MealDetailsUiModel> {
     return meals.mapIndexed { index, meal ->
         MealDetailsUiModel(
             id = meal.id,
@@ -13,12 +13,12 @@ fun GeneratedMealPlanDataModel.toMealDetailsUiModelList(): List<MealDetailsUiMod
                 1 -> "Lunch"
                 else -> "Dinner"
             },
-            totalCalories = 0f,
+            totalCalories = eachMealCalories[index],
             recipe = RecipeBriefDetailsUiModel(
                 dishName = meal.title,
                 readyInMinutes = meal.readyInMinutes,
                 imageUrl = "https://img.spoonacular.com/recipes/${meal.id}-636x393.${meal.imageType}",
-                calories = nutrients.calories.toFloat() / meals.size,
+                calories = eachMealCalories[index],
                 amount = meal.servings
             )
         )

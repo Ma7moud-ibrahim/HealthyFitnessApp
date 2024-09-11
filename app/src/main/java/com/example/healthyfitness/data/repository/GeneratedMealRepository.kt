@@ -12,7 +12,13 @@ class GeneratedMealRepository @Inject constructor(
     private val mealPlannerRemoteDataSource: MealPlannerRemoteDataSource
 ) {
     suspend fun generateMealPlan(): List<MealDetailsUiModel> {
-        return mealPlannerRemoteDataSource.generateMealPlan().toMealDetailsUiModelList()
+        val generatedMealPlanDataModel = mealPlannerRemoteDataSource.generateMealPlan()
+        val eachMealCalories =
+            generatedMealPlanDataModel.meals.map { meal ->
+                getRecipeDetails(meal.id).nutrition["Calories"]!!.split(" ")[0].toFloat()
+            }
+
+        return generatedMealPlanDataModel.toMealDetailsUiModelList(eachMealCalories)
     }
 
     suspend fun getRecipeDetails(id: Int): RecipeDetailsUiModel {

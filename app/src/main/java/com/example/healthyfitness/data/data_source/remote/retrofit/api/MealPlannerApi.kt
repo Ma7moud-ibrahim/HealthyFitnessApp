@@ -5,6 +5,7 @@ import com.example.healthyfitness.data.data_source.remote.retrofit.model.meal.Ge
 import com.example.healthyfitness.data.data_source.remote.retrofit.model.recipe.RecipeDetailsDataModel
 import retrofit2.Response
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MealPlannerApi {
@@ -16,10 +17,10 @@ interface MealPlannerApi {
         @Query("diet") diet: String = "veryHealthy"
     ): Response<GeneratedMealPlanDataModel>
 
-    @GET("recipes/:id/")
+    @GET("recipes/{id}/information")
     suspend fun getRecipeDetails(
+        @Path("id") id: Int,
         @Query("apiKey") apiKey: String = API_KEY,
-        @Query("id") id: Int,
         @Query("includeNutrition") includeNutrition: Boolean = true
     ): Response<RecipeDetailsDataModel>
 
