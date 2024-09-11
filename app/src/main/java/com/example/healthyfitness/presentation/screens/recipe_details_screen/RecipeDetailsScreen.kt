@@ -22,6 +22,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,14 +37,15 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.healthyfitness.R
 import com.example.healthyfitness.presentation.screens.recipe_details_screen.components.IngredientChips
 import com.example.healthyfitness.presentation.screens.recipe_details_screen.components.InstructionStep
 import com.example.healthyfitness.presentation.screens.recipe_details_screen.components.NutritionChips
-import com.example.healthyfitness.presentation.screens.recipe_details_screen.model.RecipeDetailsUiModel
-import com.example.healthyfitness.presentation.screens.recipe_details_screen.preview_data.fakeRecipeDetails
+import com.example.healthyfitness.presentation.screens.recipe_details_screen.view_model.RecipeDetailsViewModel
 import com.example.healthyfitness.presentation.screens.utils.ALPHA
 import com.example.healthyfitness.presentation.screens.utils.WIDTH
 import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
@@ -51,12 +53,15 @@ import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 
 @Composable
 fun RecipeDetailsScreen(
-    recipe: RecipeDetailsUiModel,
+    id: Int,
     modifier: Modifier = Modifier,
     backgroundColor: Color = MaterialTheme.colorScheme.background,
     whiteTextColor: Color = MaterialTheme.colorScheme.tertiary,
     lemonGreenTextColor: Color = MaterialTheme.colorScheme.primary,
 ) {
+    val recipeDetailsViewModel: RecipeDetailsViewModel = hiltViewModel()
+    val recipe by recipeDetailsViewModel.recipe.collectAsStateWithLifecycle()
+
     val scrollState = rememberScrollState()
     val imageHeight = (LocalConfiguration.current.screenWidthDp / 2).dp
     val targetImageHeight = animateDpAsState(
@@ -70,6 +75,10 @@ fun RecipeDetailsScreen(
         targetValue = if (scrollState.value > 0) 0f else 1f, label = ""
     )
     var expanded by remember { mutableStateOf(false) }
+
+    LaunchedEffect(true) {
+        recipeDetailsViewModel.getRecipeDetails(id)
+    }
 
     Column(
         modifier = modifier
@@ -200,7 +209,7 @@ fun RecipeDetailsScreen(
 @Composable
 private fun RecipeDetailsScreenPreview() {
     HealthyFitnessTheme(dynamicColor = false) {
-        RecipeDetailsScreen(recipe = fakeRecipeDetails)
+        RecipeDetailsScreen(id = 10)
     }
 
 }

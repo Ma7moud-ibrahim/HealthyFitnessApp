@@ -4,6 +4,7 @@ import com.example.healthyfitness.presentation.screens.meals_monitor_screen.mode
 import com.example.healthyfitness.presentation.screens.meals_monitor_screen.model.RecipeBriefDetailsUiModel
 
 val fakeMealDetails = MealDetailsUiModel(
+    id = 1,
     mealName = "breakfast",
     totalCalories = 186f,
     recipe = RecipeBriefDetailsUiModel(

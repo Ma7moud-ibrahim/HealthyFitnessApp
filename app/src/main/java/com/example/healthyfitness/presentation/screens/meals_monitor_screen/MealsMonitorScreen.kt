@@ -20,20 +20,22 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.example.healthyfitness.presentation.screens.meals_monitor_screen.components.CaloriesProgressIndicator
 import com.example.healthyfitness.presentation.screens.meals_monitor_screen.components.MealDetailsItem
-import com.example.healthyfitness.presentation.screens.meals_monitor_screen.model.MealDetailsUiModel
-import com.example.healthyfitness.presentation.screens.meals_monitor_screen.preview_data.fakeMealDetails
+import com.example.healthyfitness.presentation.screens.meals_monitor_screen.view_model.MealMonitorViewModel
 import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 
 @Composable
-fun FoodMonitorScreen(
-    meal: List<MealDetailsUiModel>,
+fun MealsMonitorScreen(
     onRecipeClicked: () -> Unit,
     modifier: Modifier = Modifier,
     background: Color = MaterialTheme.colorScheme.background
 ) {
-    var expandedMealIndex by remember { mutableStateOf<Int?>(null) }
+    val mealPlannerViewModel: MealMonitorViewModel = hiltViewModel()
+    val meal by mealPlannerViewModel.mealPlan.collectAsStateWithLifecycle()
+    var expandedMealIndex by remember { mutableStateOf<Int?>(0) }
     val scrollState = rememberScrollState()
 
     Column(
@@ -86,17 +88,11 @@ fun FoodMonitorScreen(
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun FoodMonitorScreenPreview() {
+private fun MealsMonitorScreenPreview() {
     HealthyFitnessTheme(dynamicColor = false) {
-        FoodMonitorScreen(
-            meal = listOf(
-                fakeMealDetails,
-                fakeMealDetails.copy(mealName = "Lunch", totalCalories = 338f),
-                fakeMealDetails.copy(mealName = "Dinner", totalCalories = 200f)
-            ),
+        MealsMonitorScreen(
             onRecipeClicked = {},
             modifier = Modifier.padding(bottom = 36.dp)
         )
     }
-
 }
