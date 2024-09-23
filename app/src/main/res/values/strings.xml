@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Healthy Fitness</string>
+    <string name="sign_in">SIGN IN</string>
+    <string name="don_t_have_an_account">DON\'T HAVE AN ACCOUNT</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="be_yourself">Be,\nYourself</string>
+    <string name="sign_in_to_your_account">Sign in to your Account</string>
+    <string name="sign_in_with">Sign in with</string>
+    <string name="shape_your_muscles">Shape Your\nMuscles</string>
+    <string name="already_have_an_account">Already have an account</string>
+    <string name="send">SEND</string>
+    <string name="verify">VERIFY</string>
+    <string name="save">SAVE</string>
+    <string name="enter_verification_code_just_sent_to_your_email_address">Enter Verification Code Just Sent To Your Email Address</string>
+    <string name="enter_verification_code">Enter Verification Code</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="please_enter_your_email_address_to_receive_a_verification_code">Please Enter Your Email Address To Receive a Verification Code</string>
+    <string name="your_new_password_must_be_different_from_your_old_password">Your New Password Must Be Different From Your Old Password</string>
 </resources>

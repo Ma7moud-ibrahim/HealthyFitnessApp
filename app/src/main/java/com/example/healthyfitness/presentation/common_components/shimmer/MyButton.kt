@@ -1,4 +1,4 @@
-package com.example.healthyfitness.presentation.component
+package com.example.healthyfitness.presentation.common_components.shimmer
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Arrangement
@@ -28,8 +28,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.healthyfitness.R
 import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
-import com.example.healthyfitness.presentation.theme.onPrimary
-import com.example.healthyfitness.presentation.theme.primary
 
 @Composable
 fun MyButton(
@@ -39,12 +37,16 @@ fun MyButton(
     @DrawableRes icon: Int = 0,
     shape: CornerBasedShape = MaterialTheme.shapes.large,
     buttonEnable: Boolean = true,
-    color: ButtonColors? = ButtonDefaults.buttonColors(primary),
+    color: ButtonColors? = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary),
     textStyle: TextStyle = MaterialTheme.typography.bodyLarge
 ) {
     Button(
         onClick = onClick,
-        modifier = modifier.shadow(elevation = 10.dp, spotColor = primary, ambientColor = primary),
+        modifier = modifier.shadow(
+            elevation = 10.dp,
+            spotColor = MaterialTheme.colorScheme.primary,
+            ambientColor = MaterialTheme.colorScheme.primary
+        ),
         shape = shape,
         enabled = buttonEnable,
         colors = color ?: ButtonDefaults.buttonColors()
@@ -58,7 +60,7 @@ fun MyButton(
                 text = stringResource(id = textId),
                 textAlign = TextAlign.Center,
                 style = textStyle,
-                color = onPrimary,
+                color = MaterialTheme.colorScheme.onPrimary,
                 fontWeight = FontWeight(700),
                 fontSize = 20.sp,
                 modifier = Modifier.padding(vertical = 12.dp)
@@ -68,7 +70,7 @@ fun MyButton(
                 Icon(
                     painter = painterResource(id = icon),
                     contentDescription = null,
-                    tint = onPrimary,
+                    tint = MaterialTheme.colorScheme.onPrimary,
                     modifier = Modifier
                         .padding(end = 12.dp)
                         .size(24.dp)
@@ -79,10 +81,10 @@ fun MyButton(
     }
 }
 
-@Preview(backgroundColor = 0xFF2E2D2D)
+@Preview
 @Composable
 private fun MyButtonPreview() {
-    HealthyFitnessTheme {
+    HealthyFitnessTheme(dynamicColor = false) {
         MyButton(
             textId = R.string.app_name,
             onClick = {},

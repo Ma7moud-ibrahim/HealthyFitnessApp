@@ -25,6 +25,7 @@ fun CustomInput(hint:String,prefix:Int,suffix:Int?=null) {
         onValueChange = { newValue -> textState.value = newValue },
         label = { Text(hint,style = MaterialTheme.typography.bodyMedium) },
       shape = MaterialTheme.shapes.small,
+        singleLine = true,
         prefix = { Image(imageVector = ImageVector.vectorResource(id = prefix), contentDescription = "") },
         suffix = { Image(imageVector = ImageVector.vectorResource(id = suffix), contentDescription = "") },
         colors = TextFieldDefaults.colors( focusedContainerColor = White,   // Custom background color when focused
@@ -40,6 +41,7 @@ else
             onValueChange = { newValue -> textState.value = newValue },
             placeholder = { Text(hint,style = MaterialTheme.typography.bodyMedium.copy(color = Black)) },
             shape = MaterialTheme.shapes.small,
+            singleLine = true,
             prefix = { Image(imageVector = ImageVector.vectorResource(id = prefix), contentDescription = "") },
             colors = TextFieldDefaults.colors( focusedContainerColor = White,   // Custom background color when focused
                 unfocusedContainerColor = White, // Custom background color when unfocused
