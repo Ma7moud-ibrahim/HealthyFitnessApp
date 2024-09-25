@@ -1,6 +1,7 @@
 package com.example.healthyfitness.presentation.common_components.shimmer
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,7 +31,6 @@ import com.example.healthyfitness.presentation.theme.LemonGreen
 @Composable
 fun CustomAppBar(title:String,photo:Int) {
     TopAppBar(
-
         navigationIcon = {
             IconButton(onClick = { }) {
                 Image(imageVector = ImageVector.vectorResource(id = R.drawable.ic_right_icon), contentDescription = "")

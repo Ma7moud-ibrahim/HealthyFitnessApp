@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Healthy Fitness</string>
+    <string name="workout_text">Press the + Button to Add More Workouts or Exercise In Your Routine</string>
+    <string name="workout_title">\"My Workouts\"</string>
 </resources>
