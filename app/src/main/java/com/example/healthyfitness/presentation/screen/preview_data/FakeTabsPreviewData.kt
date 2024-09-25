@@ -1,7 +1,7 @@
-package com.example.healthyfitness.presentation.screen.home4.preview_data
+package com.example.healthyfitness.presentation.screen.preview_data
 
 import com.example.healthyfitness.R
-import com.example.healthyfitness.presentation.screen.home4.model.TabDetailsUIModel
+import com.example.healthyfitness.presentation.screen.model.TabDetailsUIModel
 
 
 val tabs = listOf(
