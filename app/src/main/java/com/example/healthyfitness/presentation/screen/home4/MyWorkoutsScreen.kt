@@ -36,17 +36,22 @@ import androidx.compose.ui.unit.sp
 import com.example.healthyfitness.R
 import com.example.healthyfitness.presentation.common_components.shimmer.CustomAppBar
 import com.example.healthyfitness.presentation.common_components.shimmer.CustomButton
+import com.example.healthyfitness.presentation.screen.home4.component.MyPager
+import com.example.healthyfitness.presentation.screen.home4.preview_data.tabs
 import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 
 @Composable
-fun Workouts(
-    onClickAddExercise:() -> Unit
+fun MyWorkoutsScreen(
+    onClickAddExercise: () -> Unit
 ) {
 
-
-
     Scaffold(
-        topBar = { CustomAppBar(title = stringResource(id = R.string.workout_title), photo = R.drawable.ic_launcher_background) }
+        topBar = {
+            CustomAppBar(
+                title = stringResource(id = R.string.workout_title),
+                photo = R.drawable.ic_launcher_background
+            )
+        }
     ) { innerPadding ->
         Column(
             modifier = Modifier
@@ -61,87 +66,39 @@ fun Workouts(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                var selectedItemIndex by remember { mutableIntStateOf(1) }
-                val pager = rememberPagerState {
-                    items.size
-                }
-
-                LaunchedEffect(selectedItemIndex) {
-                    pager.animateScrollToPage(selectedItemIndex)
-                }
-
-                LaunchedEffect(pager.currentPage,pager.isScrollInProgress) {
-                    if(!pager.isScrollInProgress){
-                        selectedItemIndex = pager.currentPage
-                    }
-                }
 
                 Spacer(modifier = Modifier.height(40.dp))
 
-                TabRow(selectedTabIndex = selectedItemIndex,modifier = Modifier
-                    .size(309.dp, 35.dp)
-                    .clip(RoundedCornerShape(12.dp))) {
-                    items.forEachIndexed { index, item ->
-                        Tab(
-                            selected = index == selectedItemIndex,
-                            onClick = { selectedItemIndex = index },
-                            modifier = Modifier
-                                .background(if (selectedItemIndex == index) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary),
-
-                            text = {
-                                Text(text = item.title, color = if(selectedItemIndex == index ) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.onSecondary)
-                            },
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(42.dp))
-
-                HorizontalPager(state = pager,modifier = Modifier.fillMaxSize()) {page->
-
-                    TabContentImage(contentOfTabs[page])
-                }
+                MyPager()
             }
 
             Spacer(modifier = Modifier.height(51.dp))
 
             Text(
-                modifier = Modifier.size (226.dp,57.dp),
+                modifier = Modifier.size(226.dp, 57.dp),
                 text = stringResource(id = R.string.workout_text),
                 color = MaterialTheme.colorScheme.onSecondary,
-                style = MaterialTheme.typography.bodyMedium.copy(lineHeight = 18.5.sp, fontSize = 15.sp),
+                style = MaterialTheme.typography.bodyMedium.copy(
+                    lineHeight = 18.5.sp,
+                    fontSize = 15.sp
+                ),
                 textAlign = TextAlign.Center
             )
 
             Spacer(modifier = Modifier.height(94.dp))
 
-            CustomButton(294.0,"Add Exercise",null) { onClickAddExercise() }
+            CustomButton(294.0, "Add Exercise", null) { onClickAddExercise() }
         }
     }
 
 
 }
 
-@Composable
-private fun TabContentImage(
-    imgSrc : Int
-) {
-    Image(
-        painter = painterResource(id = imgSrc),
-        contentDescription = "",
-        modifier = Modifier
-            .fillMaxSize()
-            .clip(RoundedCornerShape(20.dp)),
-        contentScale = ContentScale.Crop
-    )
-}
-
-
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun PreviewMyWorkout() {
     HealthyFitnessTheme {
-        Workouts({})
+        MyWorkoutsScreen({})
     }
 }

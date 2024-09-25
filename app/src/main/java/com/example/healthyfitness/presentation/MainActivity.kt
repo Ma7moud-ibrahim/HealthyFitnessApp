@@ -15,7 +15,7 @@ import com.example.healthyfitness.R
 import com.example.healthyfitness.presentation.common_components.shimmer.CustomButton
 import com.example.healthyfitness.presentation.common_components.shimmer.CustomInput
 import com.example.healthyfitness.presentation.common_components.shimmer.Icon
-import com.example.healthyfitness.presentation.screen.home4.Workouts
+import com.example.healthyfitness.presentation.screen.home4.MyWorkoutsScreen
 import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             HealthyFitnessTheme(dynamicColor = false) {
-                Workouts() {}
+                MyWorkoutsScreen() {}
 
             }
         }
