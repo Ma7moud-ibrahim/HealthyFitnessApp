@@ -1,18 +1,34 @@
 package com.example.healthyfitness.presentation.screens
 
 import android.annotation.SuppressLint
-import android.content.res.Configuration
+import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,32 +36,47 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shadow
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.healthyfitness.R
-import com.example.healthyfitness.data.data_source.repository.UserRepository
 import com.example.healthyfitness.presentation.common_components.PasswordFieldComponent
 import com.example.healthyfitness.presentation.common_components.TextFieldComponent
-import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 import com.example.healthyfitness.presentation.theme.arvoFontFamily
 import com.example.healthyfitness.presentation.theme.robotoFontFamily
-import com.example.healthyfitness.presentation.utils.ValidationUtil.isValidEmail
 
 
 @SuppressLint("RememberReturnType")
 @Composable
-fun SignUpScreen(modifier: Modifier = Modifier,
-                 viewModel: SignUpViewModel = viewModel()) {
-    val name = rememberSaveable { viewModel.fullName }
-    val email = rememberSaveable { viewModel.email }
-    val password = rememberSaveable { viewModel.password }
-    val confirmPassword = rememberSaveable { viewModel.confirmPassword }
+fun SignUpScreen(viewModel: SignUpViewModel = viewModel(),
+                 onSignUpSuccess: () -> Unit) {
+    var firstName by rememberSaveable {mutableStateOf("")}
+    var lastName by rememberSaveable {mutableStateOf("")}
+    var email by rememberSaveable {mutableStateOf("")}
+    var password by rememberSaveable {mutableStateOf("")}
+
+    val context = LocalContext.current
+    val signUpResult by viewModel.signUpResult.observeAsState()
+    val validationErrors by viewModel.validationErrors.observeAsState(emptyMap())
+
+    LaunchedEffect(signUpResult) {
+        signUpResult?.let { result ->
+            result.onSuccess { response ->
+                // Save token to SharedPreferences
+                val sharedPref = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+                with(sharedPref.edit()) {
+                    putString("token", response.token)
+                    apply()
+                }
+                onSignUpSuccess()
+            }
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -109,75 +140,64 @@ fun SignUpScreen(modifier: Modifier = Modifier,
                         Spacer(modifier = Modifier.height(18.dp))
                         TextFieldComponent(
                             icon = R.drawable.ic_profile_icon,
-                            label = "Full Name",
-                            value = name.value,
-                            onValueChange = { name.value = it }
+                            label = "First Name",
+                            value = firstName,
+                            onValueChange = {
+                                firstName = it
+                                viewModel.clearFieldError("firstName")
+                            },
+                            error = validationErrors["firstName"]
                         )
+                        if (validationErrors.containsKey("firstName")) {
+                            Text(validationErrors["firstName"] ?: "", color = Color.Red)
+                        }
 
+                        Spacer(modifier = Modifier.height(18.dp))
+
+                        TextFieldComponent(
+                            icon = R.drawable.ic_profile_icon,
+                            label = "Last Name",
+                            value = lastName,
+                            onValueChange = { lastName = it
+                                viewModel.clearFieldError("lastName")},
+                                    error = validationErrors["lastName"])
+                        if (validationErrors.containsKey("lastName")) {
+                            Text(validationErrors["lastName"] ?: "", color = Color.Red)
+                        }
                         Spacer(modifier = Modifier.height(18.dp))
 
                         TextFieldComponent(
                             icon = R.drawable.ic_email_icon,
                             label = "Enter Email Address",
-                            value = email.value,
+                            value = email,
                             onValueChange = {
-                                email.value = it
-                                viewModel.validateEmail()  // Validate email on change
-                            }
+                                email = it
+                                viewModel.clearFieldError("email") // Validate email on change
+                            },
+                            error = validationErrors["email"]
                         )
-                        viewModel.emailError?.let { error ->
-                            Text(
-                                text = error,
-                                color = Color.Red,
-                                style = TextStyle(fontSize = 12.sp),
-                                modifier = Modifier.padding(top = 4.dp)
-                            )
+                        if (validationErrors.containsKey("email")) {
+                            Text(validationErrors["email"] ?: "", color = Color.Red)
                         }
-
                         Spacer(modifier = Modifier.height(18.dp))
 
                         PasswordFieldComponent(
                             icon = R.drawable.ic_lock_icon,
                             label = "Password",
-                            password = password.value,
+                            password = password,
                             onPasswordChange = {
-                                password.value = it
-                                viewModel.validatePassword()  // Validate password on change
-                            }
+                                password = it
+//                                viewModel.clearFieldError("password")
+                            },
+                            error = validationErrors["password"]
                         )
-                        viewModel.passwordError?.let { error ->
-                            Text(
-                                text = error,
-                                color = Color.Red,
-                                style = TextStyle(fontSize = 12.sp),
-                                modifier = Modifier.padding(top = 4.dp)
-                            )
+                        if (validationErrors.containsKey("password")) {
+                            Text(validationErrors["password"] ?: "", color = Color.Red)
                         }
 
                         Spacer(modifier = Modifier.height(18.dp))
-
-                        PasswordFieldComponent(
-                            icon = R.drawable.ic_lock_icon,
-                            label = "Confirm Password",
-                            password = confirmPassword.value,
-                            onPasswordChange = {
-                                confirmPassword.value = it
-                                viewModel.validateConfirmPassword()  // Validate confirm password on change
-                            }
-                        )
-                        viewModel.confirmPasswordError?.let { error ->
-                            Text(
-                                text = error,
-                                color = Color.Red,
-                                style = TextStyle(fontSize = 12.sp),
-                                modifier = Modifier.padding(top = 4.dp)
-                            )
-                        }
-
-                        Spacer(modifier = Modifier.height(16.dp))
-
                         Button(
-                            onClick = { viewModel.onSignUp() },
+                            onClick = { viewModel.signUp(firstName, lastName, email, password) },
                             shape = MaterialTheme.shapes.medium,
                             modifier = Modifier
                                 .shadow(
@@ -222,6 +242,29 @@ fun SignUpScreen(modifier: Modifier = Modifier,
                                     )
                                 )
                             }
+                            signUpResult?.let { result ->
+                                when {
+                                    result.isSuccess -> {
+                                        val response = result.getOrNull()
+                                        LaunchedEffect(response) {
+                                            response?.let {
+                                                // Save token to SharedPreferences
+                                                val sharedPref = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
+                                                with(sharedPref.edit()) {
+                                                    putString("token", it.token)
+                                                    apply()
+                                                }
+                                                // Navigate to next screen or show success message
+                                                Toast.makeText(context, "Sign up successful", Toast.LENGTH_SHORT).show()
+                                            }
+                                        }
+                                    }
+                                    result.isFailure -> {
+                                        val exception = result.exceptionOrNull()
+                                        Text("Sign up failed: ${exception?.message}", color = Color.Red)
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -230,10 +273,10 @@ fun SignUpScreen(modifier: Modifier = Modifier,
     }
 }
 
-@Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL)
-@Composable
-fun PreviewSignUpScreen() {
-    HealthyFitnessTheme(darkTheme = true) {
-        SignUpScreen(viewModel = SignUpViewModel(UserRepository()))
-    }
-}
+//@Preview(showSystemUi = true, uiMode = Configuration.UI_MODE_NIGHT_YES or Configuration.UI_MODE_TYPE_NORMAL)
+//@Composable
+//fun PreviewSignUpScreen() {
+//    HealthyFitnessTheme(darkTheme = true) {
+//        SignUpScreen(viewModel = SignUpViewModel(UserRepository()))
+//    }
+//}

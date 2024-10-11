@@ -26,7 +26,7 @@ import com.example.healthyfitness.presentation.theme.robotoFontFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PasswordFieldComponent(@DrawableRes icon: Int,label: String, password: String, onPasswordChange: (String) -> Unit) {
+fun PasswordFieldComponent(@DrawableRes icon: Int,label: String, password: String, onPasswordChange: (String) -> Unit,error: String?) {
     var passwordVisible by remember { mutableStateOf(false) }
 
     TextField(

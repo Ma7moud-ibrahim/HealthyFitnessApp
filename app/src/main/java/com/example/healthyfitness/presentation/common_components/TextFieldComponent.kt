@@ -16,10 +16,10 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import com.example.healthyfitness.presentation.theme.robotoFontFamily
+import java.lang.Error
 
 @Composable
-fun TextFieldComponent(@DrawableRes icon: Int, label: String, value: String, onValueChange: (String) -> Unit) {
-    var textVisible by remember { mutableStateOf(false) }
+fun TextFieldComponent(@DrawableRes icon: Int, label: String, value: String, onValueChange: (String) -> Unit,error: String?) {
     TextField(
         leadingIcon = { Image(painter = painterResource(icon), contentDescription = "Text Icon") } ,
         value = value,
@@ -31,6 +31,7 @@ fun TextFieldComponent(@DrawableRes icon: Int, label: String, value: String, onV
                 fontWeight = FontWeight.W400,
             )
             ) },
+        isError = error != null,
         modifier = Modifier.fillMaxWidth(),
         colors = TextFieldDefaults.colors(Color.White),
         shape = MaterialTheme.shapes.large,

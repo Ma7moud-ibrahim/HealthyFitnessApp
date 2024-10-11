@@ -1,62 +1,70 @@
 package com.example.healthyfitness.presentation.screens
 
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.healthyfitness.data.data_source.remote.retrofit.api.SignUpResponse
 import com.example.healthyfitness.data.data_source.repository.UserRepository
+import kotlinx.coroutines.launch
 
-class SignUpViewModel(private val userRepository: UserRepository) : ViewModel() {
-    var fullName = mutableStateOf("")
-    var email = mutableStateOf("")
-    var emailError by mutableStateOf<String?>(null)
+class SignUpViewModel(private val repository: UserRepository) : ViewModel() {
+    private val _signUpResult = MutableLiveData<Result<SignUpResponse>>()
+    val signUpResult: LiveData<Result<SignUpResponse>> = _signUpResult
 
-    var password = mutableStateOf("")
-    var passwordError by mutableStateOf<String?>(null)
+    private val _validationErrors = MutableLiveData<Map<String, String>>()
+    val validationErrors: LiveData<Map<String, String>> = _validationErrors
 
-    var confirmPassword = mutableStateOf("")
-    var confirmPasswordError by mutableStateOf<String?>(null)
+    fun signUp(firstName: String, lastName: String, email: String, password: String) {
+        val errors = validateInput(firstName, lastName, email, password)
+        if (errors.isNotEmpty()) {
+            _validationErrors.value = errors
+            return
+        }
 
-    fun validateEmail() {
-        emailError = when {
-            email.value.isEmpty() -> "Email cannot be empty"
-            !android.util.Patterns.EMAIL_ADDRESS.matcher(email.value).matches() -> "Invalid email address"
-            else -> null  // Clear the error if valid
+        viewModelScope.launch {
+            _signUpResult.value = repository.signUp(firstName, lastName, email, password)
         }
     }
 
-    fun validatePassword() {
-        passwordError = when {
-            password.value.isEmpty() -> "Password cannot be empty"
-            password.value.length < 6 -> "Use at least 6 characters"
-            else -> null  // Clear the error if valid
+    private fun validateInput(firstName: String, lastName: String, email: String, password: String): Map<String, String> {
+        val errors = mutableMapOf<String, String>()
+
+        if (firstName.isBlank()) {
+            errors["firstName"] = "First name cannot be empty"
         }
+
+        if (lastName.isBlank()) {
+            errors["lastName"] = "Last name cannot be empty"
+        }
+
+        if (!isValidEmail(email)) {
+            errors["email"] = "Invalid email format"
+        }
+
+        if (!isValidPassword(password)) {
+            errors["password"] = "Password must be at least 8 characters long and contain at least one capital letter"
+        }
+
+        return errors
     }
 
-    fun validateConfirmPassword() {
-        confirmPasswordError = when {
-            confirmPassword.value.isEmpty() -> "Confirm your password"
-            confirmPassword.value != password.value -> "Passwords do not match"
-            else -> null  // Clear the error if valid
-        }
+    private fun isValidEmail(email: String): Boolean {
+        return email.contains("@") && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    fun validateFields(): Boolean {
-        validateEmail()
-        validatePassword()
-        validateConfirmPassword()
-
-        return emailError == null && passwordError == null && confirmPasswordError == null
+    private fun isValidPassword(password: String): Boolean {
+        return password.length >= 8 && password.any { it.isUpperCase() }
     }
 
-    fun onSignUp() {
-        if (validateFields()) {
-            // Proceed with the sign-up process
-        }
+    fun clearValidationErrors() {
+        _validationErrors.value = emptyMap()
+    }
+
+    fun clearFieldError(field: String) {
+        _validationErrors.value = _validationErrors.value?.toMutableMap()?.apply { remove(field) }
     }
 }
-
-
 
 
 //    suspend fun onSignUp(): Boolean {
