@@ -2,11 +2,13 @@ package com.example.healthyfitness.presentation.utils
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.healthyfitness.data.data_source.repository.UserRepository
-import com.example.healthyfitness.presentation.screens.SignUpViewModel
+import com.example.healthyfitness.data.data_source.repository.LoginRepository
+import com.example.healthyfitness.data.data_source.repository.SignUpRepository
+import com.example.healthyfitness.presentation.screens.viewmodels.LoginViewModel
+import com.example.healthyfitness.presentation.screens.viewmodels.SignUpViewModel
 
 class SignUpViewModelFactory(
-    private val repository: UserRepository
+    private val repository: SignUpRepository
 ) : ViewModelProvider.Factory {
     @Suppress("UNCHECKED_CAST")
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
@@ -16,3 +18,5 @@ class SignUpViewModelFactory(
         throw IllegalArgumentException("Unknown ViewModel class")
     }
 }
+
+

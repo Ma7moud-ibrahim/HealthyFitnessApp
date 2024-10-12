@@ -26,7 +26,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -47,6 +46,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.healthyfitness.R
 import com.example.healthyfitness.presentation.common_components.PasswordFieldComponent
 import com.example.healthyfitness.presentation.common_components.TextFieldComponent
+import com.example.healthyfitness.presentation.screens.viewmodels.SignUpViewModel
 import com.example.healthyfitness.presentation.theme.arvoFontFamily
 import com.example.healthyfitness.presentation.theme.robotoFontFamily
 
@@ -54,7 +54,8 @@ import com.example.healthyfitness.presentation.theme.robotoFontFamily
 @SuppressLint("RememberReturnType")
 @Composable
 fun SignUpScreen(viewModel: SignUpViewModel = viewModel(),
-                 onSignUpSuccess: () -> Unit) {
+                 onSignUpSuccess: () -> Unit,
+                 onNavigateToLogin: () -> Unit) {
     var firstName by rememberSaveable {mutableStateOf("")}
     var lastName by rememberSaveable {mutableStateOf("")}
     var email by rememberSaveable {mutableStateOf("")}
@@ -187,7 +188,7 @@ fun SignUpScreen(viewModel: SignUpViewModel = viewModel(),
                             password = password,
                             onPasswordChange = {
                                 password = it
-//                                viewModel.clearFieldError("password")
+                                viewModel.clearFieldError("password")
                             },
                             error = validationErrors["password"]
                         )
@@ -220,7 +221,7 @@ fun SignUpScreen(viewModel: SignUpViewModel = viewModel(),
 
                         Spacer(modifier = Modifier.height(8.dp))
 
-                        TextButton(onClick = { /* Navigate to Sign In Screen */ }) {
+                        TextButton(onClick = onNavigateToLogin) {
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
                                 horizontalArrangement = Arrangement.Center
@@ -256,6 +257,7 @@ fun SignUpScreen(viewModel: SignUpViewModel = viewModel(),
                                                 }
                                                 // Navigate to next screen or show success message
                                                 Toast.makeText(context, "Sign up successful", Toast.LENGTH_SHORT).show()
+
                                             }
                                         }
                                     }

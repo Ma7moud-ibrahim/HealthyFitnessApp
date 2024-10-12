@@ -1,18 +1,18 @@
-package com.example.healthyfitness.presentation.screens
+package com.example.healthyfitness.presentation.screens.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.healthyfitness.data.data_source.remote.retrofit.api.SignUpResponse
-import com.example.healthyfitness.data.data_source.repository.UserRepository
+import com.example.healthyfitness.data.data_source.remote.retrofit.api.responses.SignUpResponse
+import com.example.healthyfitness.data.data_source.repository.SignUpRepository
 import kotlinx.coroutines.launch
 
-class SignUpViewModel(private val repository: UserRepository) : ViewModel() {
+class SignUpViewModel(private val repository: SignUpRepository) : ViewModel() {
     private val _signUpResult = MutableLiveData<Result<SignUpResponse>>()
     val signUpResult: LiveData<Result<SignUpResponse>> = _signUpResult
 
-    private val _validationErrors = MutableLiveData<Map<String, String>>()
+    private val _validationErrors = MutableLiveData<Map<String, String>>(emptyMap())
     val validationErrors: LiveData<Map<String, String>> = _validationErrors
 
     fun signUp(firstName: String, lastName: String, email: String, password: String) {
