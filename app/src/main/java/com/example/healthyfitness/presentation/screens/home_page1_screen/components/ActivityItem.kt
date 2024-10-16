@@ -1,90 +1,92 @@
 package com.example.healthyfitness.presentation.screens.home_page1_screen.components
 
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.healthyfitness.R
-import com.example.healthyfitness.presentation.screens.home_page1_screen.model.ActivityType
-import com.example.healthyfitness.presentation.screens.home_page1_screen.model.FitnessActivity
-import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 
 @Composable
-fun ActivityItem(activity: FitnessActivity) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp,10.dp,12.dp,0.dp)
-            .background(
-                color = MaterialTheme.colorScheme.surface, shape =MaterialTheme.shapes.extraLarge
-            ), verticalArrangement = Arrangement.SpaceEvenly
+fun ExerciseSection(
+    @DrawableRes img: Int,
+    title: String,
+    value: String,
+    unit: String,
+    isActive: Boolean,
+    onStart: () -> Unit,
+    onStop: () -> Unit,
+    onRetry: () -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth()
     ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(29.dp,18.dp,29.dp,18.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            Column(verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally) {
-                Image(
-                    painter = painterResource(id = activity.type.iconImg),
-                    contentDescription = null,
-                    modifier = Modifier.size(44.dp),
-                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.primary)
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                Text(text =stringResource(id = activity.type.label), color = Color.White)
-            }
-            Column(
-                horizontalAlignment = Alignment.End,
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Row (verticalAlignment = Alignment.CenterVertically,){
-                    Text(
-                        text = activity.value,
-                        color = Color.White,
-                        style = MaterialTheme.typography.bodyLarge.copy(fontSize =30.sp,fontWeight = FontWeight.Bold)
+
+                Text(text = title, style = MaterialTheme.typography.headlineSmall)
+                Spacer(modifier = Modifier.width(20.dp))
+                Image(
+                    painter = painterResource(id = img),
+                    contentDescription = null, // Provide a description if needed for accessibility
+                    modifier = Modifier.size(40.dp) // Adjust size as needed
+                )
+
+            }
+
+            Text(text = "$value $unit", style = MaterialTheme.typography.bodyLarge)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Button(
+                    onClick = if (isActive) onStop else onStart,
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = if (isActive) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
                     )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = activity.valueType,
-                        color = Color.White,
-                        style = MaterialTheme.typography.bodyMedium.copy(fontSize =17.sp )
-                    )
+                ) {
+                    Text(if (isActive) "Stop" else "Start")
                 }
-                Spacer(modifier = Modifier.height(8.dp))
-                Box(modifier = Modifier.background(color = MaterialTheme.colorScheme.primary, shape = MaterialTheme.shapes.large)
-                    .padding(14.dp,4.dp,14.dp,4.dp)) { Text(
-                    text = activity.time,
-                    color = MaterialTheme.colorScheme.onPrimary,
-                    style = MaterialTheme.typography.bodySmall.copy(fontSize = 13.sp)
-                ) }
+                if (!isActive) {
+                    Button(onClick = onRetry) {
+                        Text("Retry")
+                    }
+                }
             }
         }
     }
 }
+
+@Preview
+@Composable
+private fun SSS() {
+    ExerciseSection(value = "sa", unit = "d", title = "d", onStop = {}, onRetry = {}, onStart = {}, isActive = false, img = R.drawable.ic_swimmer_icon)
+
+}
+
 //@Preview(
 //    showBackground = true,
 //    showSystemUi = true,
