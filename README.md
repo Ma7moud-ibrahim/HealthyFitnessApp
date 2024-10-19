@@ -2,8 +2,16 @@
 ## 📸 App Screenshots & Visual Design
 
 Here are some screenshots of the Fitness Tracker App:
-
-![Picture1](https://github.com/user-attachments/assets/f275b9e8-8cae-4d73-b540-b34a55556dc0) ![Picture2](https://github.com/user-attachments/assets/d3184e1f-c1b9-4635-b7e1-943a197f8d1c) ![Picture3](https://github.com/user-attachments/assets/4b34adbe-27c4-4e2c-b717-8a814ec99ebb) ![Picture4](https://github.com/user-attachments/assets/c4db612c-2190-4176-b063-03703d7526d8) ![Picture5](https://github.com/user-attachments/assets/dc3fba4a-c963-4d27-b5ee-b6605b909ca8) ![Picture6](https://github.com/user-attachments/assets/5449aaa1-ffb8-4f27-b710-0768414369b4) ![Picture7](https://github.com/user-attachments/assets/d1b5d20c-3e9e-4944-947d-f92882b60281) ![Picture8](https://github.com/user-attachments/assets/25d1262b-2898-4a34-b879-9947a6b062b5)
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/f275b9e8-8cae-4d73-b540-b34a55556dc0" alt="Picture1" width="300"/>
+  <img src="https://github.com/user-attachments/assets/d3184e1f-c1b9-4635-b7e1-943a197f8d1c" alt="Picture2" width="300"/>
+  <img src="https://github.com/user-attachments/assets/4b34adbe-27c4-4e2c-b717-8a814ec99ebb" alt="Picture3" width="300"/>
+  <img src="https://github.com/user-attachments/assets/c4db612c-2190-4176-b063-03703d7526d8" alt="Picture4" width="300"/>
+  <img src="https://github.com/user-attachments/assets/dc3fba4a-c963-4d27-b5ee-b6605b909ca8" alt="Picture5" width="300"/>
+  <img src="https://github.com/user-attachments/assets/5449aaa1-ffb8-4f27-b710-0768414369b4" alt="Picture6" width="300"/>
+  <img src="https://github.com/user-attachments/assets/d1b5d20c-3e9e-4944-947d-f92882b60281" alt="Picture7" width="300"/>
+  <img src="https://github.com/user-attachments/assets/25d1262b-2898-4a34-b879-9947a6b062b5" alt="Picture8" width="300"/>
+</p>
 
 ## 📋 Introduction
 The **Fitness Tracker App** is an Android mobile application designed to help users organize, track, and improve their daily workouts and fitness progress. It offers personalized workout plans, calorie tracking, progress analysis, and motivational features to encourage users to achieve their fitness goals.
