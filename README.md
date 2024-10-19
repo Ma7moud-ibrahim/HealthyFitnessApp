@@ -1,4 +1,4 @@
-# 🏋️‍♂️ Fitness Tracker App
+# Fitness Tracker App
 
 ## 📋 Introduction
 The **Fitness Tracker App** is an Android mobile application designed to help users organize, track, and improve their daily workouts and fitness progress. It offers personalized workout plans, calorie tracking, progress analysis, and motivational features to encourage users to achieve their fitness goals.
