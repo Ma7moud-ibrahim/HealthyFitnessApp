@@ -4,17 +4,19 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import com.example.healthyfitness.R
-import com.example.healthyfitness.presentation.common_components.shimmer.CustomButton
-import com.example.healthyfitness.presentation.common_components.shimmer.CustomInput
-import com.example.healthyfitness.presentation.common_components.shimmer.Icon
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import com.example.healthyfitness.presentation.screens.meals_monitor_screen.MealsMonitorScreen
+import com.example.healthyfitness.presentation.screens.recipe_details_screen.RecipeDetailsScreen
 import com.example.healthyfitness.presentation.theme.HealthyFitnessTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -26,11 +28,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             HealthyFitnessTheme(dynamicColor = false) {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-//                    AppNavHost()
+//                    MealsMonitorScreen(onRecipeClicked = {})
+                    AppNavHost(innerPadding)
                 }
 
             }
@@ -38,21 +37,39 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-/*
-    CustomButton(buttonText = "Sign Up", icon = { Icon("Sign Up") }, width = 300.0) {
-
+sealed class Screen(val route: String) {
+    data object MealMonitorScreen : Screen("detail") {
+        data object RecipeDetailsScreen : Screen("subDetail/{id}")
     }
-*/
-    CustomInput("Enter your name", R.drawable.ic_lock_icon)
-
 }
 
-@Preview(showBackground = true)
 @Composable
-fun GreetingPreview() {
-    HealthyFitnessTheme {
-        Greeting("Android")
+fun AppNavHost(innerPadding: PaddingValues) {
+    val navController = rememberNavController()
+    NavHost(navController = navController, startDestination = Screen.MealMonitorScreen.route) {
+        composable(Screen.MealMonitorScreen.route) {
+            MealsMonitorScreen(
+                modifier = Modifier.padding(innerPadding),
+                onRecipeClicked = {
+                    navController.navigate(
+                        Screen.MealMonitorScreen.RecipeDetailsScreen.route.replace(
+                            "{id}",
+                            "$it"
+                        )
+                    )
+                }
+            )
+        }
+        composable(
+            Screen.MealMonitorScreen.RecipeDetailsScreen.route,
+            arguments = listOf(navArgument("id") {
+                type = NavType.IntType
+            })
+        ) {
+            RecipeDetailsScreen(
+                it.arguments?.getInt("id") ?: 0,
+                onBackClick = { navController.navigateUp() }
+            )
+        }
     }
 }
